@@ -11,3 +11,14 @@ mongoose
 app.get("/", (req, res) => res.send("Test"));
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server is running on port ${port}`));
+
+//routes
+const users = require("./routes/api/users");
+const tweets = require("./routes/api/tweets");
+app.use("/api/users", users);
+app.use("/api/tweets", tweets);
+
+//parse JSON we send to frontend
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
