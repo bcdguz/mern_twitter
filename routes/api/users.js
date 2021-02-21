@@ -3,14 +3,21 @@ const bcrypt = require('bcryptjs');
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
+const passport = require('passport');
 
 const router = express.Router();
 
 router.get("/test", (req, res) => res.json({ msg: "This is the users route" }));
 
-//Registering a new User
-router.post('/register', (req, res) => {
+router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
+    res.json({
+        id: req.user.id,
+        handle: req.user.handle,
+        email: req.user.email
+    });
+})
 
+router.post('/register', (req, res) => {
     // Check to make sure nobody has already registered with a duplicate email
     User.findOne({ email: req.body.email })
         .then(user => {
