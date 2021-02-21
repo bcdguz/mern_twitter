@@ -20,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //routes
+app.get('/', (req, res) => res.json({ msg: "Hello" }));
 app.use("/api/users", users);
 app.use("/api/tweets", tweets);
 
